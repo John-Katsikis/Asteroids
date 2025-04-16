@@ -11,6 +11,7 @@
 #include "BoundingSphere.h"
 #include "GUILabel.h"
 #include "Explosion.h"
+#include "SmallAst.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -25,6 +26,7 @@ Asteroids::Asteroids(int argc, char *argv[])
 /** Destructor. */
 Asteroids::~Asteroids(void)
 {
+	std::cout << " Asteroid destroyed!" << std::endl;
 }
 
 // PUBLIC INSTANCE METHODS ////////////////////////////////////////////////////
@@ -61,7 +63,7 @@ void Asteroids::Start()
 	// Create a spaceship and add it to the world
 	mGameWorld->AddObject(CreateSpaceship());
 	// Create some asteroids and add them to the world
-	CreateAsteroids(10);
+	CreateAsteroids(1);
 
 	//Create the GUI
 	CreateGUI();
@@ -134,18 +136,31 @@ void Asteroids::OnSpecialKeyReleased(int key, int x, int y)
 
 void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 {
-	if (object->GetType() == GameObjectType("Asteroid"))
-	{
+	if (object->GetType() == GameObjectType("Asteroid")){
 		shared_ptr<GameObject> explosion = CreateExplosion();
 		explosion->SetPosition(object->GetPosition());
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
-		mAsteroidCount--;
+		CreateSmallAst(2);
+		mAsteroidCount+2;
 		if (mAsteroidCount <= 0) 
 		{ 
 			SetTimer(500, START_NEXT_LEVEL); 
 		}
 	}
+
+	if (object->GetType() == GameObjectType("Small Asteroid")) {
+		shared_ptr<GameObject> explosion = CreateExplosion();
+		explosion->SetPosition(object->GetPosition());
+		explosion->SetRotation(object->GetRotation());
+		mGameWorld->AddObject(explosion);
+		mAsteroidCount--;
+		if (mAsteroidCount <= 0)
+		{
+			SetTimer(500, START_NEXT_LEVEL);
+		}
+	}
+
 }
 
 // PUBLIC INSTANCE METHODS IMPLEMENTING ITimerListener ////////////////////////
@@ -162,7 +177,7 @@ void Asteroids::OnTimer(int value)
 	{
 		mLevel++;
 		int num_asteroids = 10 + 2 * mLevel;
-		CreateAsteroids(num_asteroids);
+		  CreateAsteroids(num_asteroids);
 	}
 
 	if (value == SHOW_GAME_OVER)
@@ -201,6 +216,7 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 		Animation *anim_ptr = AnimationManager::GetInstance().GetAnimationByName("asteroid1");
 		shared_ptr<Sprite> asteroid_sprite
 			= make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+
 		asteroid_sprite->SetLoopAnimation(true);
 		shared_ptr<GameObject> asteroid = make_shared<Asteroid>();
 		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 10.0f));
@@ -210,8 +226,25 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 	}
 }
 
+void Asteroids::CreateSmallAst(const uint num) {
+	for (uint i = 0; i < num; i++) {
+		Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("asteroid1");
+		shared_ptr<Sprite> asteroid_sprite
+			= make_shared<Sprite>(anim_ptr->GetWidth()/2, anim_ptr->GetHeight()/2, anim_ptr);
+
+		asteroid_sprite->SetLoopAnimation(true);
+		shared_ptr<GameObject> asteroid = make_shared<SmallAst>();
+		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 5.0f));
+		asteroid->SetSprite(asteroid_sprite);
+		asteroid->SetScale(0.2f);
+		mGameWorld->AddObject(asteroid);
+	}
+}
+
 void Asteroids::CreateGUI()
 {
+	// SCORE LABEL
+	
 	// Add a (transparent) border around the edge of the game display
 	mGameDisplay->GetContainer()->SetBorder(GLVector2i(10, 10));
 	// Create a new GUILabel and wrap it up in a shared_ptr
@@ -223,6 +256,8 @@ void Asteroids::CreateGUI()
 		= static_pointer_cast<GUIComponent>(mScoreLabel);
 	mGameDisplay->GetContainer()->AddComponent(score_component, GLVector2f(0.0f, 1.0f));
 
+	// LIVES LEFT LABEL
+	 
 	// Create a new GUILabel and wrap it up in a shared_ptr
 	mLivesLabel = make_shared<GUILabel>("Lives: 3");
 	// Set the vertical alignment of the label to GUI_VALIGN_BOTTOM
@@ -230,6 +265,10 @@ void Asteroids::CreateGUI()
 	// Add the GUILabel to the GUIComponent  
 	shared_ptr<GUIComponent> lives_component = static_pointer_cast<GUIComponent>(mLivesLabel);
 	mGameDisplay->GetContainer()->AddComponent(lives_component, GLVector2f(0.0f, 0.0f));
+
+
+
+	// GAME OVER LABEL
 
 	// Create a new GUILabel and wrap it up in a shared_ptr
 	mGameOverLabel = shared_ptr<GUILabel>(new GUILabel("GAME OVER"));
