@@ -43,6 +43,7 @@ public:
 	void OnWorldUpdated(GameWorld* world) {}
 	void OnObjectAdded(GameWorld* world, shared_ptr<GameObject> object) {}
 	void OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object);
+	void OnAsteroidDestroyed(uint count);
 
 	// Override the default implementation of ITimerListener ////////////////////
 	void OnTimer(int value);
@@ -52,6 +53,7 @@ private:
 	shared_ptr<GUILabel> mScoreLabel;
 	shared_ptr<GUILabel> mLivesLabel;
 	shared_ptr<GUILabel> mGameOverLabel;
+	shared_ptr<GUILabel> mAsteroidsLabel;
 
 	uint mLevel;
 	uint mAsteroidCount;

@@ -62,12 +62,13 @@ void Asteroids::Start()
 
 	// Create a spaceship and add it to the world
 	mGameWorld->AddObject(CreateSpaceship());
-	// Create some asteroids and add them to the world
-	CreateAsteroids(1);
-
+	
 	//Create the GUI
 	CreateGUI();
-
+	
+	// Create some asteroids and add them to the world
+	CreateAsteroids(1);
+	
 	// Add a player (watcher) to the game world
 	mGameWorld->AddListener(&mPlayer);
 
@@ -136,13 +137,16 @@ void Asteroids::OnSpecialKeyReleased(int key, int x, int y)
 
 void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 {
+
+
 	if (object->GetType() == GameObjectType("Asteroid")){
 		shared_ptr<GameObject> explosion = CreateExplosion();
 		explosion->SetPosition(object->GetPosition());
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
+		mAsteroidCount--;
 		CreateSmallAst(2);
-		mAsteroidCount+2;
+		
 		if (mAsteroidCount <= 0) 
 		{ 
 			SetTimer(500, START_NEXT_LEVEL); 
@@ -160,6 +164,8 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 			SetTimer(500, START_NEXT_LEVEL);
 		}
 	}
+
+	OnAsteroidDestroyed(mAsteroidCount);
 
 }
 
@@ -224,9 +230,12 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 		asteroid->SetScale(0.2f);
 		mGameWorld->AddObject(asteroid);
 	}
+
+	OnAsteroidDestroyed(num_asteroids);
 }
 
 void Asteroids::CreateSmallAst(const uint num) {
+	
 	for (uint i = 0; i < num; i++) {
 		Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("asteroid1");
 		shared_ptr<Sprite> asteroid_sprite
@@ -238,6 +247,7 @@ void Asteroids::CreateSmallAst(const uint num) {
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
 		mGameWorld->AddObject(asteroid);
+		mAsteroidCount++;
 	}
 }
 
@@ -266,7 +276,16 @@ void Asteroids::CreateGUI()
 	shared_ptr<GUIComponent> lives_component = static_pointer_cast<GUIComponent>(mLivesLabel);
 	mGameDisplay->GetContainer()->AddComponent(lives_component, GLVector2f(0.0f, 0.0f));
 
-
+	// ASTEROIDS LEFT LABEL
+	
+	// Create a new GUILabel and wrap it up in a shared_ptr
+	mAsteroidsLabel = make_shared<GUILabel>("Asteroids Left: 0");
+	// Set the vertical alignment of the label to GUI_VALIGN_TOP
+	mAsteroidsLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_TOP);
+	// Add the GUILabel to the GUIComponent
+	shared_ptr<GUIComponent> asteroids_component = static_pointer_cast<GUIComponent>(mAsteroidsLabel);
+	// Position it slightly to the right of the Score label
+	mGameDisplay->GetContainer()->AddComponent(asteroids_component, GLVector2f(0.3f, 1.0f));
 
 	// GAME OVER LABEL
 
@@ -283,6 +302,13 @@ void Asteroids::CreateGUI()
 		= static_pointer_cast<GUIComponent>(mGameOverLabel);
 	mGameDisplay->GetContainer()->AddComponent(game_over_component, GLVector2f(0.5f, 0.5f));
 
+}
+
+void Asteroids::OnAsteroidDestroyed(uint count) {
+	std::ostringstream msg_stream;
+	msg_stream << "Asteroids Left: " << mAsteroidCount;
+	std::string msg = msg_stream.str();
+	mAsteroidsLabel->SetText(msg);
 }
 
 void Asteroids::OnScoreChanged(int score)
