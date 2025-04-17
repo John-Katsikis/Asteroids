@@ -54,6 +54,7 @@ private:
 	shared_ptr<GUILabel> mLivesLabel;
 	shared_ptr<GUILabel> mGameOverLabel;
 	shared_ptr<GUILabel> mAsteroidsLabel;
+	shared_ptr<GUILabel> mVelocityLabel;
 
 	uint mLevel;
 	uint mAsteroidCount;

@@ -1,7 +1,7 @@
 #include "GameWorld.h"
 #include "GameObject.h"
 
-bool GameObject::mRenderDebug = false;
+bool GameObject::mRenderDebug = true;
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 

@@ -67,7 +67,7 @@ void Asteroids::Start()
 	CreateGUI();
 	
 	// Create some asteroids and add them to the world
-	CreateAsteroids(1);
+	CreateAsteroids(10);
 	
 	// Add a player (watcher) to the game world
 	mGameWorld->AddListener(&mPlayer);
@@ -200,6 +200,7 @@ shared_ptr<GameObject> Asteroids::CreateSpaceship()
 	// shared_ptrs of different types because GameWorld implements IRefCount
 	mSpaceship = make_shared<Spaceship>();
 	mSpaceship->SetBoundingShape(make_shared<BoundingSphere>(mSpaceship->GetThisPtr(), 4.0f));
+
 	shared_ptr<Shape> bullet_shape = make_shared<Shape>("bullet.shape");
 	mSpaceship->SetBulletShape(bullet_shape);
 	Animation *anim_ptr = AnimationManager::GetInstance().GetAnimationByName("spaceship");
@@ -301,6 +302,11 @@ void Asteroids::CreateGUI()
 	shared_ptr<GUIComponent> game_over_component
 		= static_pointer_cast<GUIComponent>(mGameOverLabel);
 	mGameDisplay->GetContainer()->AddComponent(game_over_component, GLVector2f(0.5f, 0.5f));
+
+	// VELOCITY LABEL
+	// Create a label to display the spaceship's speed
+	//mVelocityLabel = make_shared<GUILabel>("0"); // You can adjust the position (10, 10) as needed
+	//  fffmVelocityLabel->SetPosition(100, 100);  // Position this label somewhere near the bottom-right of the spaceship
 
 }
 
