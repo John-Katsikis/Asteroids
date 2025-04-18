@@ -3,7 +3,7 @@
 #include "SmallAst.h"
 #include "BoundingShape.h"
 
-SmallAst::SmallAst(void) : GameObject("Small Asteroid")
+SmallAst::SmallAst(void) : GameObject("SmallAsteroid")
 {
 	mAngle = rand() % 360;
 	mRotation = 0; // rand() % 90;
@@ -29,17 +29,25 @@ bool SmallAst::CollisionTest(shared_ptr<GameObject> o)
 
 void SmallAst::OnCollision(const GameObjectList& objects)
 {
-		if (objects.front()->GetType() == GameObjectType("Small Asteroid")) {
-			if (getID() < objects.front()->getID()) {
+	if (objects.front()->GetType() == GameObjectType("SmallAsteroid")) {
+			std::cout << "My ID: " << id << ", Other ID: " << objects.front()->id << std::endl;
+			if (id < objects.front()->id) {
 				mWorld->FlagForRemoval(GetThisPtr());
-				//swap(mVelocity.x, objects.front()->mVelocity.x);
-				//swap(mVelocity.y, objects.front()->mVelocity.y);
+				swap(mVelocity.x, objects.front()->mVelocity.x);
+				swap(mVelocity.y, objects.front()->mVelocity.y);
+				
 			}
 		}
 		else if (objects.front()->GetType() == GameObjectType("Spaceship")) {
-
+			
 		}
-		else {
+		else if (objects.front()->GetType() == GameObjectType("Asteroid")) {
+		swap(mVelocity.x, objects.front()->mVelocity.x);
+		swap(mVelocity.y, objects.front()->mVelocity.y);
+	    //mVelocity.x * 2;
+		//mVelocity.y * 2;
+	}
+		else {   
 			mWorld->FlagForRemoval(GetThisPtr());
 		}
 	

@@ -39,14 +39,22 @@ void Asteroid::OnCollision(const GameObjectList& objects)
 	//else{
 	
 	
-	if (objects.front()->GetType() == GameObjectType("Asteroid")) {
-		if (this > objects.front().get())
+	if (objects.front()->GetType() == GameObjectType("Asteroid")){
+		//if (this > objects.front().get())
 		swap(mVelocity.x, objects.front()->mVelocity.x);
+		swap(mVelocity.y, objects.front()->mVelocity.y);
 		
 	}
-	else if(objects.front()->GetType() == GameObjectType("Small Asteroid")){
-		
+	else if (objects.front()->GetType() == GameObjectType("SmallAsteroid")){
+		swap(mVelocity.x, objects.front()->mVelocity.x);
+		swap(mVelocity.y, objects.front()->mVelocity.y);
+		//mVelocity.x / 2;
+		//mVelocity.y / 2;
 	}
+	else if (objects.front()->GetType() == GameObjectType("Spaceship")){
+
+	}
+	
 	else {
 		mWorld->FlagForRemoval(GetThisPtr());
 	}

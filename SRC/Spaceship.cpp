@@ -102,10 +102,14 @@ bool Spaceship::CollisionTest(shared_ptr<GameObject> o)
 
 void Spaceship::OnCollision(const GameObjectList &objects)
 {
-	if (objects.front()->GetType() == GameObjectType("Small Asteroid")) {
+	if (objects.front()->GetType() == GameObjectType("SmallAsteroid")) {
 		swap(mVelocity.x ,objects.front()->mVelocity.x);
 		swap(mVelocity.y, objects.front()->mVelocity.y);
 
+	}
+	else if (objects.front()->GetType() == GameObjectType("Asteroid")) {
+		swap(mVelocity.x, objects.front()->mVelocity.x);
+		swap(mVelocity.y, objects.front()->mVelocity.y);
 	}
 	else {
 		mWorld->FlagForRemoval(GetThisPtr());

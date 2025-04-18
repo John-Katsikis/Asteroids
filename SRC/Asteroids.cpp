@@ -153,7 +153,7 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		}
 	}
 
-	if (object->GetType() == GameObjectType("Small Asteroid")) {
+	if (object->GetType() == GameObjectType("SmallAsteroid")) {
 		shared_ptr<GameObject> explosion = CreateExplosion();
 		explosion->SetPosition(object->GetPosition());
 		explosion->SetRotation(object->GetRotation());
@@ -226,10 +226,11 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 
 		asteroid_sprite->SetLoopAnimation(true);
 		shared_ptr<GameObject> asteroid = make_shared<Asteroid>();
-		asteroid->setID(i);
 		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 10.0f));
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
+		asteroid->id=i;
+		std::cout << asteroid->id <<std::endl;
 		mGameWorld->AddObject(asteroid);
 	}
 
@@ -248,7 +249,7 @@ void Asteroids::CreateSmallAst(shared_ptr<GameObject> parent, const uint num) {
 		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 5.0f));
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
-		asteroid->setID(i + parent->getID() * 100);
+		asteroid->id = (i + parent->id * 100);
 		mGameWorld->AddObject(asteroid);
 		mAsteroidCount++;
 	}

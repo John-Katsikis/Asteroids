@@ -69,18 +69,9 @@ public:
 	GLfloat mAngle;
 	GLfloat mRotation;
 	GLfloat mScale;
-
-	void setID(int enter) {
-		id = enter;
-	}
-
-	int getID() {
-		return id;
-	}
+	int id=0;
 
 protected:
-	
-	int id;
 
 	shared_ptr<Shape> mShape;
 	shared_ptr<Sprite> mSprite;
