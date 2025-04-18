@@ -79,7 +79,7 @@ void Spaceship::Shoot(void)
 	// Calculate the point at the node of the spaceship from position and heading
 	GLVector3f bullet_position = mPosition + (spaceship_heading * 4);
 	// Calculate how fast the bullet should travel
-	float bullet_speed = 30;
+	float bullet_speed = 1000;
 	// Construct a vector for the bullet's velocity
 	GLVector3f bullet_velocity = mVelocity + spaceship_heading * bullet_speed;
 	// Construct a new bullet
@@ -102,5 +102,11 @@ bool Spaceship::CollisionTest(shared_ptr<GameObject> o)
 
 void Spaceship::OnCollision(const GameObjectList &objects)
 {
-	mWorld->FlagForRemoval(GetThisPtr());
-}
+	if (objects.front()->GetType() == GameObjectType("Small Asteroid")) {
+		cout << "Hekk" << endl;
+		//mVelocity.x = mVelocity.x+500;
+	}
+	else {
+		mWorld->FlagForRemoval(GetThisPtr());
+	}
+	}

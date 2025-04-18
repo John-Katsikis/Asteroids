@@ -31,11 +31,15 @@ bool Asteroid::CollisionTest(shared_ptr<GameObject> o)
 
 void Asteroid::OnCollision(const GameObjectList& objects)
 {
-	if (objects.front()->GetType() == GameObjectType("Bullet")) {
-		mVelocity.y = 30;
-	}
-	else{
+	//if (objects.front()->GetType() == GameObjectType("Bullet")) {
+		//mVelocity.y = 30;
+	//}
+	//else{
+	//if (objects.front()->GetType() == GameObjectType("Asteroid")) {
+		//
+	//}
+
 		mWorld->FlagForRemoval(GetThisPtr());
-	}
+//	}
 }
 
