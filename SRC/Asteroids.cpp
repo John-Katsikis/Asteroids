@@ -145,7 +145,7 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		explosion->SetRotation(object->GetRotation());
 		mGameWorld->AddObject(explosion);
 		mAsteroidCount--;
-		CreateSmallAst(2);
+		CreateSmallAst(object, 2);
 		
 		if (mAsteroidCount <= 0) 
 		{ 
@@ -226,6 +226,7 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 
 		asteroid_sprite->SetLoopAnimation(true);
 		shared_ptr<GameObject> asteroid = make_shared<Asteroid>();
+		asteroid->setID(i);
 		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 10.0f));
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
@@ -235,7 +236,7 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 	OnAsteroidDestroyed(num_asteroids);
 }
 
-void Asteroids::CreateSmallAst(const uint num) {
+void Asteroids::CreateSmallAst(shared_ptr<GameObject> parent, const uint num) {
 	
 	for (uint i = 0; i < num; i++) {
 		Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("asteroid1");
@@ -247,6 +248,7 @@ void Asteroids::CreateSmallAst(const uint num) {
 		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 5.0f));
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
+		asteroid->setID(i + parent->getID() * 100);
 		mGameWorld->AddObject(asteroid);
 		mAsteroidCount++;
 	}

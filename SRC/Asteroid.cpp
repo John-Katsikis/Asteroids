@@ -3,6 +3,8 @@
 #include "Asteroid.h"
 #include "BoundingShape.h"
 
+using namespace std;
+
 Asteroid::Asteroid(void) : GameObject("Asteroid")
 {
 	mAngle = rand() % 360;
@@ -32,14 +34,24 @@ bool Asteroid::CollisionTest(shared_ptr<GameObject> o)
 void Asteroid::OnCollision(const GameObjectList& objects)
 {
 	//if (objects.front()->GetType() == GameObjectType("Bullet")) {
-		//mVelocity.y = 30;
+	//	mVelocity.y = 30;
 	//}
 	//else{
-	//if (objects.front()->GetType() == GameObjectType("Asteroid")) {
-		//
-	//}
-
+	
+	
+	if (objects.front()->GetType() == GameObjectType("Asteroid")) {
+		if (this > objects.front().get())
+		swap(mVelocity.x, objects.front()->mVelocity.x);
+		
+	}
+	else if(objects.front()->GetType() == GameObjectType("Small Asteroid")){
+		
+	}
+	else {
 		mWorld->FlagForRemoval(GetThisPtr());
-//	}
+	}
+
+		
+	//}
 }
 

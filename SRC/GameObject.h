@@ -60,7 +60,6 @@ public:
 
 	shared_ptr<GameObject> GetThisPtr() { return shared_from_this(); }
 
-protected:
 	GameObjectType mType;
 
 	GameWorld* mWorld;
@@ -70,6 +69,18 @@ protected:
 	GLfloat mAngle;
 	GLfloat mRotation;
 	GLfloat mScale;
+
+	void setID(int enter) {
+		id = enter;
+	}
+
+	int getID() {
+		return id;
+	}
+
+protected:
+	
+	int id;
 
 	shared_ptr<Shape> mShape;
 	shared_ptr<Sprite> mSprite;
