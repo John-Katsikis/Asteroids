@@ -28,6 +28,10 @@ public:
 			mScore += 10;
 			FireScoreChanged();
 		}
+		if (object->GetType() == GameObjectType("Spaceship")) {
+			mScore -= 20;
+			FireScoreChanged();
+		}
 	}
 
 	void AddListener(shared_ptr<IScoreListener> listener)

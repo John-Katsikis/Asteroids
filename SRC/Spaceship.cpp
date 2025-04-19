@@ -108,8 +108,7 @@ void Spaceship::OnCollision(const GameObjectList &objects)
 
 	}
 	else if (objects.front()->GetType() == GameObjectType("Asteroid")) {
-		swap(mVelocity.x, objects.front()->mVelocity.x);
-		swap(mVelocity.y, objects.front()->mVelocity.y);
+		mWorld->FlagForRemoval(GetThisPtr());
 	}
 	else {
 		mWorld->FlagForRemoval(GetThisPtr());
