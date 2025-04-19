@@ -153,7 +153,7 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		}
 	}
 
-	if (object->GetType() == GameObjectType("SmallAsteroid")) {
+	if (object->GetType() == GameObjectType("Small Asteroid")) {
 		shared_ptr<GameObject> explosion = CreateExplosion();
 		explosion->SetPosition(object->GetPosition());
 		explosion->SetRotation(object->GetRotation());

@@ -2,6 +2,11 @@
 #include "GameUtil.h"
 #include "Asteroid.h"
 #include "BoundingShape.h"
+#include <memory>    // For std::shared_ptr
+#include <vector>    // Or <list> or appropriate header for GameObjectList
+#include <algorithm> // For std::swap
+#include <iostream>  // For potential debug output
+
 
 using namespace std;
 
@@ -23,9 +28,8 @@ Asteroid::~Asteroid(void)
 
 bool Asteroid::CollisionTest(shared_ptr<GameObject> o)
 {
-	if (GetType() == o->GetType()) return false;
+	//if (GetType() == o->GetType()) return false;
 	if (o->GetType() == GameObjectType("Bullet"))
-		//mVelocity.y = 30;
 	if (mBoundingShape.get() == NULL) return false;
 	if (o->GetBoundingShape().get() == NULL) return false;
 	return mBoundingShape->CollisionTest(o->GetBoundingShape());
@@ -38,21 +42,21 @@ void Asteroid::OnCollision(const GameObjectList& objects)
 	//}
 	//else{
 	
-	
 	if (objects.front()->GetType() == GameObjectType("Asteroid")){
-		//if (this > objects.front().get())
-		swap(mVelocity.x, objects.front()->mVelocity.x);
-		swap(mVelocity.y, objects.front()->mVelocity.y);
-		
+		if (this < objects.front().get()) {
+			swap(mVelocity.x, objects.front()->mVelocity.x);
+			swap(mVelocity.y, objects.front()->mVelocity.y);
+		}
 	}
-	else if (objects.front()->GetType() == GameObjectType("SmallAsteroid")){
+	else if (objects.front()->GetType() == GameObjectType("Small Asteroid")){
 		swap(mVelocity.x, objects.front()->mVelocity.x);
 		swap(mVelocity.y, objects.front()->mVelocity.y);
-		//mVelocity.x / 2;
-		//mVelocity.y / 2;
+			mVelocity.x /= 2;
+			mVelocity.y /= 2;
 	}
 	else if (objects.front()->GetType() == GameObjectType("Spaceship")){
-
+		//swap(mVelocity.x, objects.front()->mVelocity.x);
+		//swap(mVelocity.y, objects.front()->mVelocity.y);
 	}
 	
 	else {
