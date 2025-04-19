@@ -1,33 +1,33 @@
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\lib\engine.pdb
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\lib\engine.idb
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\gamedisplay.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\gameobject.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\gameobjecttype.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\gamesession.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\gamewindow.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\gameworld.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\glutsession.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\glutwindow.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\glvector.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\guicomponent.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\guicontainer.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\guiicon.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\guilabel.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\image.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\imagemanager.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\movementcontroller.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\shape.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\sprite.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\texture.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\texturemanager.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\animation.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\animationmanager.obj
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\lib\engine.lib
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\asteroids\debug\..\..\..\lib\engine.pdb
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\engine.tlog\cl.command.1.tlog
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\engine.tlog\cl.items.tlog
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\engine.tlog\cl.read.1.tlog
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\engine.tlog\cl.write.1.tlog
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\engine.tlog\lib-link.read.1.tlog
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\engine.tlog\lib-link.write.1.tlog
-c:\users\kizito\onedrive - city, university of london\in2026\2024_2025\coursework\in2026 coursework code\vc\engine\debug\engine.tlog\lib.command.1.tlog
+x:\university\games tech\asteroids\lib\engine.pdb
+x:\university\games tech\asteroids\lib\engine.idb
+x:\university\games tech\asteroids\vc\engine\debug\gamedisplay.obj
+x:\university\games tech\asteroids\vc\engine\debug\gameobject.obj
+x:\university\games tech\asteroids\vc\engine\debug\gameobjecttype.obj
+x:\university\games tech\asteroids\vc\engine\debug\gamesession.obj
+x:\university\games tech\asteroids\vc\engine\debug\gamewindow.obj
+x:\university\games tech\asteroids\vc\engine\debug\gameworld.obj
+x:\university\games tech\asteroids\vc\engine\debug\glutsession.obj
+x:\university\games tech\asteroids\vc\engine\debug\glutwindow.obj
+x:\university\games tech\asteroids\vc\engine\debug\glvector.obj
+x:\university\games tech\asteroids\vc\engine\debug\guicomponent.obj
+x:\university\games tech\asteroids\vc\engine\debug\guicontainer.obj
+x:\university\games tech\asteroids\vc\engine\debug\guiicon.obj
+x:\university\games tech\asteroids\vc\engine\debug\guilabel.obj
+x:\university\games tech\asteroids\vc\engine\debug\image.obj
+x:\university\games tech\asteroids\vc\engine\debug\imagemanager.obj
+x:\university\games tech\asteroids\vc\engine\debug\movementcontroller.obj
+x:\university\games tech\asteroids\vc\engine\debug\shape.obj
+x:\university\games tech\asteroids\vc\engine\debug\sprite.obj
+x:\university\games tech\asteroids\vc\engine\debug\texture.obj
+x:\university\games tech\asteroids\vc\engine\debug\texturemanager.obj
+x:\university\games tech\asteroids\vc\engine\debug\animation.obj
+x:\university\games tech\asteroids\vc\engine\debug\animationmanager.obj
+x:\university\games tech\asteroids\lib\engine.lib
+x:\university\games tech\asteroids\vc\asteroids\debug\..\..\..\lib\engine.pdb
+x:\university\games tech\asteroids\vc\engine\debug\engine.tlog\cl.command.1.tlog
+x:\university\games tech\asteroids\vc\engine\debug\engine.tlog\cl.items.tlog
+x:\university\games tech\asteroids\vc\engine\debug\engine.tlog\cl.read.1.tlog
+x:\university\games tech\asteroids\vc\engine\debug\engine.tlog\cl.write.1.tlog
+x:\university\games tech\asteroids\vc\engine\debug\engine.tlog\lib-link.write.1.tlog
+x:\university\games tech\asteroids\vc\engine\debug\engine.tlog\lib.command.1.tlog
+x:\university\games tech\asteroids\vc\engine\debug\engine.tlog\lib.read.1.tlog
