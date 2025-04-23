@@ -40,7 +40,7 @@ public:
 
 	void OnPlayerKilled(int lives_left);
 
-	void OnLifeChanged();
+	void OnLifeChanged(int i);
 
 	// Declaration of IGameWorldListener interface //////////////////////////////
 

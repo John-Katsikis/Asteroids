@@ -12,7 +12,7 @@
 #include "GUILabel.h"
 #include "Explosion.h"
 #include "SmallAst.h"
-//#include "ExtraLife.h"
+#include "ExtraLife.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -171,14 +171,8 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 	}
 
 	if (object->GetType() == GameObjectType("ExtraLife")) {
-		mPlayer.increaseLives(1);
-		// Format the lives left message using an string-based stream
-		std::ostringstream msg_stream;
-		msg_stream << "Lives: " << mPlayer.getLives();
-		// Get the lives left message as a string
-		std::string lives_msg = msg_stream.str();
-		mLivesLabel->SetText(lives_msg);
-		cout << "EXTRA LIFE" << mPlayer.getLives() << endl;
+		OnLifeChanged(1);
+
 		
 	}
 
@@ -222,7 +216,7 @@ void Asteroids::CreateExtraLife() {
 	shared_ptr<Sprite> life_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
 
 	life_sprite->SetLoopAnimation(true);
-	shared_ptr<GameObject> life = make_shared<Asteroid>();
+	shared_ptr<GameObject> life = make_shared<ExtraLife>();
 	life->SetBoundingShape(make_shared<BoundingSphere>(life->GetThisPtr(), 10.0f));
 	life->SetSprite(life_sprite);
 	life->SetScale(0.2f);
@@ -372,8 +366,10 @@ void Asteroids::OnScoreChanged(int score)
 	mScoreLabel->SetText(score_msg);
 }
 
-void Asteroids::OnLifeChanged()
+void Asteroids::OnLifeChanged(int i)
 {
+	mPlayer.increaseLives(i);
+
 	// Format the lives left message using an string-based stream
 	std::ostringstream msg_stream;
 	msg_stream << "Lives: " << mPlayer.getLives();

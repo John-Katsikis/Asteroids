@@ -18,7 +18,10 @@ public:
 
 	void OnObjectAdded(GameWorld* world, shared_ptr<GameObject> object) {}
 
-	void increaseLives(int i) { mLives = mLives + i; }
+	void increaseLives(int i) {
+		mLives = mLives + i;
+		cout << mLives << endl;
+	}
 
 	int getLives() {
 		return mLives;
@@ -30,9 +33,7 @@ public:
 			mLives -= 1;
 			FirePlayerKilled();
 		}
-		if (object->GetType() == GameObjectType("ExtraLife")) {
-			mLives += 1;
-		}
+		
 	}
 
 	void AddListener(shared_ptr<IPlayerListener> listener)
