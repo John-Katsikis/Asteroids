@@ -9,10 +9,12 @@
 #include "ScoreKeeper.h"
 #include "Player.h"
 #include "IPlayerListener.h"
+#include "ExtraLife.h"
 
 class GameObject;
 class Spaceship;
 class GUILabel;
+class ExtraLife;
 
 class Asteroids : public GameSession, public IKeyboardListener, public IGameWorldListener, public IScoreListener, public IPlayerListener
 {
@@ -38,6 +40,8 @@ public:
 
 	void OnPlayerKilled(int lives_left);
 
+	void OnLifeChanged();
+
 	// Declaration of IGameWorldListener interface //////////////////////////////
 
 	void OnWorldUpdated(GameWorld* world) {}
@@ -55,6 +59,8 @@ private:
 	shared_ptr<GUILabel> mGameOverLabel;
 	shared_ptr<GUILabel> mAsteroidsLabel;
 	shared_ptr<GUILabel> mVelocityLabel;
+	
+	
 
 	uint mLevel;
 	uint mAsteroidCount;
@@ -64,6 +70,9 @@ private:
 	void CreateGUI();
 	void CreateAsteroids(const uint num_asteroids);
 	void CreateSmallAst(shared_ptr<GameObject> parent, const uint num);
+
+	void CreateExtraLife();
+
 	shared_ptr<GameObject> CreateExplosion();
 	
 	const static uint SHOW_GAME_OVER = 0;

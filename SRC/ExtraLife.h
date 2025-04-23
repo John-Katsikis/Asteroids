@@ -1,4 +1,3 @@
-
 #ifndef __EXTRALIFE_H__
 #define __EXTRALIFE_H__
 

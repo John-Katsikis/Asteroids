@@ -12,6 +12,7 @@
 #include "GUILabel.h"
 #include "Explosion.h"
 #include "SmallAst.h"
+//#include "ExtraLife.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -56,6 +57,8 @@ void Asteroids::Start()
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
 	glEnable(GL_LIGHT0);
 
+
+	Animation *extralife_anim = AnimationManager::GetInstance().CreateAnimationFromFile("extralife", 99, 116, 99, 116, "wrench.png");
 	Animation *explosion_anim = AnimationManager::GetInstance().CreateAnimationFromFile("explosion", 64, 1024, 64, 64, "explosion_fs.png");
 	Animation *asteroid1_anim = AnimationManager::GetInstance().CreateAnimationFromFile("asteroid1", 128, 8192, 128, 128, "asteroid1_fs.png");
 	Animation *spaceship_anim = AnimationManager::GetInstance().CreateAnimationFromFile("spaceship", 128, 128, 128, 128, "spaceship_fs.png");
@@ -67,8 +70,10 @@ void Asteroids::Start()
 	CreateGUI();
 	
 	// Create some asteroids and add them to the world
-	CreateAsteroids(1);
+	CreateAsteroids(10);
 	
+	CreateExtraLife();
+
 	// Add a player (watcher) to the game world
 	mGameWorld->AddListener(&mPlayer);
 
@@ -165,6 +170,19 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		}
 	}
 
+	if (object->GetType() == GameObjectType("ExtraLife")) {
+		mPlayer.increaseLives(1);
+		// Format the lives left message using an string-based stream
+		std::ostringstream msg_stream;
+		msg_stream << "Lives: " << mPlayer.getLives();
+		// Get the lives left message as a string
+		std::string lives_msg = msg_stream.str();
+		mLivesLabel->SetText(lives_msg);
+		cout << "EXTRA LIFE" << mPlayer.getLives() << endl;
+		
+	}
+
+
 	OnAsteroidDestroyed(mAsteroidCount);
 
 }
@@ -193,7 +211,29 @@ void Asteroids::OnTimer(int value)
 
 }
 
+
+
 // PROTECTED INSTANCE METHODS /////////////////////////////////////////////////
+
+void Asteroids::CreateExtraLife() {
+
+	Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("extralife");
+
+	shared_ptr<Sprite> life_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+
+	life_sprite->SetLoopAnimation(true);
+	shared_ptr<GameObject> life = make_shared<Asteroid>();
+	life->SetBoundingShape(make_shared<BoundingSphere>(life->GetThisPtr(), 10.0f));
+	life->SetSprite(life_sprite);
+	life->SetScale(0.2f);
+
+	life->id = 1;
+
+	mGameWorld->AddObject(life);
+}
+
+
+
 shared_ptr<GameObject> Asteroids::CreateSpaceship()
 {
 	// Create a raw pointer to a spaceship that can be converted to
@@ -201,11 +241,12 @@ shared_ptr<GameObject> Asteroids::CreateSpaceship()
 	mSpaceship = make_shared<Spaceship>();
 	mSpaceship->SetBoundingShape(make_shared<BoundingSphere>(mSpaceship->GetThisPtr(), 4.0f));
 
-	shared_ptr<Shape> bullet_shape = make_shared<Shape>("bullet.shape");
+	shared_ptr<Shape> bullet_shape = make_shared<Shape>("fastBullet.shape");
 	mSpaceship->SetBulletShape(bullet_shape);
 	Animation *anim_ptr = AnimationManager::GetInstance().GetAnimationByName("spaceship");
-	shared_ptr<Sprite> spaceship_sprite =
-		make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+
+	shared_ptr<Sprite> spaceship_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+	
 	mSpaceship->SetSprite(spaceship_sprite);
 	mSpaceship->SetScale(0.1f);
 	// Reset spaceship back to centre of the world
@@ -221,16 +262,17 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 	for (uint i = 0; i < num_asteroids; i++)
 	{
 		Animation *anim_ptr = AnimationManager::GetInstance().GetAnimationByName("asteroid1");
-		shared_ptr<Sprite> asteroid_sprite
-			= make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+
+		shared_ptr<Sprite> asteroid_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
 
 		asteroid_sprite->SetLoopAnimation(true);
 		shared_ptr<GameObject> asteroid = make_shared<Asteroid>();
 		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 10.0f));
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
+
 		asteroid->id=i;
-		std::cout << asteroid->id <<std::endl;
+	//	std::cout << asteroid->id <<std::endl;
 		mGameWorld->AddObject(asteroid);
 	}
 
@@ -273,7 +315,7 @@ void Asteroids::CreateGUI()
 	// LIVES LEFT LABEL
 	 
 	// Create a new GUILabel and wrap it up in a shared_ptr
-	mLivesLabel = make_shared<GUILabel>("Lives: 3");
+	mLivesLabel = make_shared<GUILabel>("Lives: "+to_string(mPlayer.getLives()));
 	// Set the vertical alignment of the label to GUI_VALIGN_BOTTOM
 	mLivesLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_BOTTOM);
 	// Add the GUILabel to the GUIComponent  
@@ -330,6 +372,16 @@ void Asteroids::OnScoreChanged(int score)
 	mScoreLabel->SetText(score_msg);
 }
 
+void Asteroids::OnLifeChanged()
+{
+	// Format the lives left message using an string-based stream
+	std::ostringstream msg_stream;
+	msg_stream << "Lives: " << mPlayer.getLives();
+	// Get the lives left message as a string
+	std::string lives_msg = msg_stream.str();
+	mLivesLabel->SetText(lives_msg);
+}
+
 void Asteroids::OnPlayerKilled(int lives_left)
 {
 	shared_ptr<GameObject> explosion = CreateExplosion();
@@ -339,7 +391,7 @@ void Asteroids::OnPlayerKilled(int lives_left)
 
 	// Format the lives left message using an string-based stream
 	std::ostringstream msg_stream;
-	msg_stream << "Lives: " << lives_left;
+	msg_stream << "Lives: " << mPlayer.getLives();
 	// Get the lives left message as a string
 	std::string lives_msg = msg_stream.str();
 	mLivesLabel->SetText(lives_msg);

@@ -3,10 +3,9 @@
 #include "ExtraLife.h"
 #include "BoundingShape.h"
 
-
 using namespace std;
 
-ExtraLife::ExtraLife(void) : GameObject("Asteroid")
+ExtraLife::ExtraLife(void) : GameObject("ExtraLife")
 {
 	mAngle = rand() % 360;
 	mRotation = 0; // rand() % 90;

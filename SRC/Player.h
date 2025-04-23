@@ -18,11 +18,20 @@ public:
 
 	void OnObjectAdded(GameWorld* world, shared_ptr<GameObject> object) {}
 
+	void increaseLives(int i) { mLives = mLives + i; }
+
+	int getLives() {
+		return mLives;
+	}
+
 	void OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 	{
 		if (object->GetType() == GameObjectType("Spaceship")) {
 			mLives -= 1;
 			FirePlayerKilled();
+		}
+		if (object->GetType() == GameObjectType("ExtraLife")) {
+			mLives += 1;
 		}
 	}
 
@@ -30,6 +39,7 @@ public:
 	{
 		mListeners.push_back(listener);
 	}
+
 
 	void FirePlayerKilled()
 	{

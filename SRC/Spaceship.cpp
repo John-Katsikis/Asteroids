@@ -111,6 +111,9 @@ void Spaceship::OnCollision(const GameObjectList &objects)
 	else if (objects.front()->GetType() == GameObjectType("Asteroid")) {
 		mWorld->FlagForRemoval(GetThisPtr());
 	}
+	else if (objects.front()->GetType() == GameObjectType("ExtraLife")) {
+
+	}
 	else {
 		mWorld->FlagForRemoval(GetThisPtr());
 	}

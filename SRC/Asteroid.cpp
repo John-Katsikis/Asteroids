@@ -57,6 +57,7 @@ void Asteroid::OnCollision(const GameObjectList& objects)
 	else if (objects.front()->GetType() == GameObjectType("Spaceship")){
 		mWorld->FlagForRemoval(GetThisPtr());
 	}
+
 	//else if()
 	//else {
 		//mWorld->FlagForRemoval(GetThisPtr());
