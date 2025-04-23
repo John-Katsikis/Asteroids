@@ -67,7 +67,7 @@ void Asteroids::Start()
 	CreateGUI();
 	
 	// Create some asteroids and add them to the world
-	CreateAsteroids(10);
+	CreateAsteroids(1);
 	
 	// Add a player (watcher) to the game world
 	mGameWorld->AddListener(&mPlayer);

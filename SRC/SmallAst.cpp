@@ -19,9 +19,14 @@ SmallAst::~SmallAst(void)
 {
 }
 
+void SmallAst::OrderDestruction() {
+	mWorld->FlagForRemoval(GetThisPtr());
+}
+
 bool SmallAst::CollisionTest(shared_ptr<GameObject> o)
 {
 //	if (GetType() == o->GetType()) return false;
+	if (o->GetType() == GameObjectType("Bullet")) return false;
 	if (mBoundingShape.get() == NULL) return false;
 	if (o->GetBoundingShape().get() == NULL) return false;
 	return mBoundingShape->CollisionTest(o->GetBoundingShape());
@@ -30,7 +35,7 @@ bool SmallAst::CollisionTest(shared_ptr<GameObject> o)
 void SmallAst::OnCollision(const GameObjectList& objects)
 {
 	if (objects.front()->GetType() == GameObjectType("Small Asteroid")) {
-			std::cout << "My ID: " << id << ", Other ID: " << objects.front()->id << std::endl;
+
 			if (id < objects.front()->id) {
 			//	mWorld->FlagForRemoval(GetThisPtr());
 				swap(mVelocity.x, objects.front()->mVelocity.x);
@@ -44,11 +49,11 @@ void SmallAst::OnCollision(const GameObjectList& objects)
 		else if (objects.front()->GetType() == GameObjectType("Asteroid")) {
 			swap(mVelocity.x, objects.front()->mVelocity.x);
 			swap(mVelocity.y, objects.front()->mVelocity.y);
-				mVelocity.x *= 2;
-				mVelocity.y *= 2;
+			//	mVelocity.x *= 2;
+				//mVelocity.y *= 2;
 	}
-		else {   
-			mWorld->FlagForRemoval(GetThisPtr());
-		}
+	//	else {   
+	//		mWorld->FlagForRemoval(GetThisPtr());
+	//	}
 	
 	}

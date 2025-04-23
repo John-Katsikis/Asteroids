@@ -9,6 +9,7 @@ public:
 	Asteroid(void);
 	~Asteroid(void);
 
+	void OrderDestruction() override;
 	bool CollisionTest(shared_ptr<GameObject> o);
 	void OnCollision(const GameObjectList& objects);
 	

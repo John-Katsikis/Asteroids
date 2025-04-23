@@ -61,6 +61,10 @@ void GameObject::Reset()
 	SetRotation(0);
 }
 
+void GameObject::OrderDestruction() {
+	//mWorld->FlagForRemoval(GetThisPtr());
+}
+
 /** Update this game object by updating position, velocity and angle of object. */
 void GameObject::Update(int t)
 {
@@ -97,6 +101,7 @@ void GameObject::Render(void)
 	if (mShape.get() != NULL) mShape->Render();
 	if (mSprite.get() != NULL) mSprite->Render();
 }
+
 
 /** Clear up after rendering game object. */
 void GameObject::PostRender(void)

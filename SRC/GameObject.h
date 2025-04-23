@@ -19,6 +19,8 @@ public:
 
 	void Reset();
 
+	virtual void OrderDestruction();
+
 	virtual void Update(int t);
 	virtual void PreRender(void);
 	virtual void Render(void);
