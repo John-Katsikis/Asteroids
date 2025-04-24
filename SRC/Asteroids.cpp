@@ -172,8 +172,6 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 
 	if (object->GetType() == GameObjectType("ExtraLife")) {
 		OnLifeChanged(1);
-
-		
 	}
 
 
@@ -369,7 +367,6 @@ void Asteroids::OnScoreChanged(int score)
 void Asteroids::OnLifeChanged(int i)
 {
 	mPlayer.increaseLives(i);
-
 	// Format the lives left message using an string-based stream
 	std::ostringstream msg_stream;
 	msg_stream << "Lives: " << mPlayer.getLives();

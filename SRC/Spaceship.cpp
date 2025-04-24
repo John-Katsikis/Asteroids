@@ -12,6 +12,7 @@ using namespace std;
 Spaceship::Spaceship()
 	: GameObject("Spaceship"), mThrust(0)
 {
+	isInvincible = false;
 }
 
 /** Construct a spaceship with given position, velocity, acceleration, angle, and rotation. */
@@ -104,12 +105,21 @@ bool Spaceship::CollisionTest(shared_ptr<GameObject> o)
 void Spaceship::OnCollision(const GameObjectList &objects)
 {
 	if (objects.front()->GetType() == GameObjectType("Small Asteroid")) {
-		swap(mVelocity.x ,objects.front()->mVelocity.x);
-		swap(mVelocity.y, objects.front()->mVelocity.y);
-
+		if (!isInvincible) {
+			swap(mVelocity.x, objects.front()->mVelocity.x);
+			swap(mVelocity.y, objects.front()->mVelocity.y);
+		}
+		else {
+			objects.front()->OrderDestruction();
+		}
 	}
 	else if (objects.front()->GetType() == GameObjectType("Asteroid")) {
-		mWorld->FlagForRemoval(GetThisPtr());
+		if (!isInvincible) {
+			mWorld->FlagForRemoval(GetThisPtr());
+		}
+		else {
+			objects.front()->OrderDestruction();
+		}
 	}
 	else if (objects.front()->GetType() == GameObjectType("ExtraLife")) {
 

@@ -11,7 +11,11 @@
 class Player : public IGameWorldListener
 {
 public:
-	Player() { mLives = 3; }
+	Player() {
+		mLives = 3;
+		isInvincible = false;
+	}
+
 	virtual ~Player() {}
 
 	void OnWorldUpdated(GameWorld* world) {}
@@ -25,6 +29,14 @@ public:
 
 	int getLives() {
 		return mLives;
+	}
+
+	void makeInvincible(){
+		isInvincible = true;
+	}
+
+	void stripInvincibility() {
+		isInvincible = false;
 	}
 
 	void OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
@@ -53,7 +65,7 @@ public:
 
 private:
 	int mLives;
-
+	bool isInvincible;
 	typedef std::list< shared_ptr<IPlayerListener> > PlayerListenerList;
 
 	PlayerListenerList mListeners;
