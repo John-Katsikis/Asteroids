@@ -52,16 +52,16 @@ public:
 	// Override the default implementation of ITimerListener ////////////////////
 	void OnTimer(int value);
 
-private:
 	shared_ptr<Spaceship> mSpaceship;
+
+private:
+	
 	shared_ptr<GUILabel> mScoreLabel;
 	shared_ptr<GUILabel> mLivesLabel;
 	shared_ptr<GUILabel> mGameOverLabel;
 	shared_ptr<GUILabel> mAsteroidsLabel;
 	shared_ptr<GUILabel> mVelocityLabel;
 	
-	
-
 	uint mLevel;
 	uint mAsteroidCount;
 
@@ -73,11 +73,14 @@ private:
 
 	void CreateExtraLife();
 
+	void CreateShield();
+
 	shared_ptr<GameObject> CreateExplosion();
 	
 	const static uint SHOW_GAME_OVER = 0;
 	const static uint START_NEXT_LEVEL = 1;
 	const static uint CREATE_NEW_PLAYER = 2;
+	const static uint INVINCIBLE_TIMER = 3;
 
 	ScoreKeeper mScoreKeeper;
 	Player mPlayer;

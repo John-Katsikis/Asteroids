@@ -34,6 +34,14 @@ Spaceship::~Spaceship(void)
 
 // PUBLIC INSTANCE METHODS ////////////////////////////////////////////////////
 
+void Spaceship::makeInvincible() {
+	isInvincible = true;
+}
+
+void Spaceship::makeNOT() {
+	isInvincible = false;
+}
+
 /** Update this spaceship. */
 void Spaceship::Update(int t)
 {

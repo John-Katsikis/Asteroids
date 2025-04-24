@@ -31,13 +31,6 @@ public:
 		return mLives;
 	}
 
-	void makeInvincible(){
-		isInvincible = true;
-	}
-
-	void stripInvincibility() {
-		isInvincible = false;
-	}
 
 	void OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 	{

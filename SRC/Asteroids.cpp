@@ -13,6 +13,7 @@
 #include "Explosion.h"
 #include "SmallAst.h"
 #include "ExtraLife.h"
+#include "Shield.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -57,7 +58,7 @@ void Asteroids::Start()
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
 	glEnable(GL_LIGHT0);
 
-
+	Animation *shield_anim = AnimationManager::GetInstance().CreateAnimationFromFile("shield", 99, 116, 99, 116, "wrench.png");
 	Animation *extralife_anim = AnimationManager::GetInstance().CreateAnimationFromFile("extralife", 99, 116, 99, 116, "wrench.png");
 	Animation *explosion_anim = AnimationManager::GetInstance().CreateAnimationFromFile("explosion", 64, 1024, 64, 64, "explosion_fs.png");
 	Animation *asteroid1_anim = AnimationManager::GetInstance().CreateAnimationFromFile("asteroid1", 128, 8192, 128, 128, "asteroid1_fs.png");
@@ -72,7 +73,9 @@ void Asteroids::Start()
 	// Create some asteroids and add them to the world
 	CreateAsteroids(10);
 	
-	CreateExtraLife();
+	//CreateExtraLife();
+
+	CreateShield();
 
 	// Add a player (watcher) to the game world
 	mGameWorld->AddListener(&mPlayer);
@@ -174,6 +177,10 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		OnLifeChanged(1);
 	}
 
+	if (object->GetType() == GameObjectType("Shield")) {
+		mSpaceship->makeInvincible();
+		SetTimer(20000, INVINCIBLE_TIMER);
+	}
 
 	OnAsteroidDestroyed(mAsteroidCount);
 
@@ -201,6 +208,10 @@ void Asteroids::OnTimer(int value)
 		mGameOverLabel->SetVisible(true);
 	}
 
+	if (value == INVINCIBLE_TIMER) {
+		mSpaceship->makeNOT();
+	}
+
 }
 
 
@@ -224,6 +235,22 @@ void Asteroids::CreateExtraLife() {
 	mGameWorld->AddObject(life);
 }
 
+void Asteroids::CreateShield() {
+
+	Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("shield");
+
+	shared_ptr<Sprite> shield_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+
+	shield_sprite->SetLoopAnimation(true);
+	shared_ptr<GameObject> shield = make_shared<Shield>();
+	shield->SetBoundingShape(make_shared<BoundingSphere>(shield->GetThisPtr(), 10.0f));
+	shield->SetSprite(shield_sprite);
+	shield->SetScale(0.2f);
+
+	shield->id = 1;
+
+	mGameWorld->AddObject(shield);
+}
 
 
 shared_ptr<GameObject> Asteroids::CreateSpaceship()
