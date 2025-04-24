@@ -54,9 +54,9 @@ void Asteroid::OnCollision(const GameObjectList& objects)
 			//mVelocity.x /= 2;
 			//mVelocity.y /= 2;
 	}
-	else if (objects.front()->GetType() == GameObjectType("Spaceship")){
-		mWorld->FlagForRemoval(GetThisPtr());
-	}
+	//else if (objects.front()->GetType() == GameObjectType("Spaceship")){
+		//mWorld->FlagForRemoval(GetThisPtr());
+//	}
 
 	//else if()
 	//else {

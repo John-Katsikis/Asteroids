@@ -58,8 +58,8 @@ void Asteroids::Start()
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
 	glEnable(GL_LIGHT0);
 
-	Animation *shield_anim = AnimationManager::GetInstance().CreateAnimationFromFile("shield", 99, 116, 99, 116, "wrench.png");
-	Animation *extralife_anim = AnimationManager::GetInstance().CreateAnimationFromFile("extralife", 99, 116, 99, 116, "wrench.png");
+	Animation *shield_anim = AnimationManager::GetInstance().CreateAnimationFromFile("shield", 256, 256, 256, 256, "265shield.png"); //https://bitti-lab.itch.io/bitti-free-shield-16-images
+	Animation *extralife_anim = AnimationManager::GetInstance().CreateAnimationFromFile("extralife", 99, 116, 99, 116, "wrench.png"); //https://ilkaytobello.itch.io/inventory-items
 	Animation *explosion_anim = AnimationManager::GetInstance().CreateAnimationFromFile("explosion", 64, 1024, 64, 64, "explosion_fs.png");
 	Animation *asteroid1_anim = AnimationManager::GetInstance().CreateAnimationFromFile("asteroid1", 128, 8192, 128, 128, "asteroid1_fs.png");
 	Animation *spaceship_anim = AnimationManager::GetInstance().CreateAnimationFromFile("spaceship", 128, 128, 128, 128, "spaceship_fs.png");
@@ -73,7 +73,7 @@ void Asteroids::Start()
 	// Create some asteroids and add them to the world
 	CreateAsteroids(10);
 	
-	//CreateExtraLife();
+	CreateExtraLife();
 
 	CreateShield();
 
@@ -145,7 +145,6 @@ void Asteroids::OnSpecialKeyReleased(int key, int x, int y)
 
 void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 {
-
 
 	if (object->GetType() == GameObjectType("Asteroid")){
 		shared_ptr<GameObject> explosion = CreateExplosion();
@@ -239,7 +238,7 @@ void Asteroids::CreateShield() {
 
 	Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("shield");
 
-	shared_ptr<Sprite> shield_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+	shared_ptr<Sprite> shield_sprite = make_shared<Sprite>(anim_ptr->GetWidth()/2, anim_ptr->GetHeight()/2, anim_ptr);
 
 	shield_sprite->SetLoopAnimation(true);
 	shared_ptr<GameObject> shield = make_shared<Shield>();
