@@ -41,6 +41,10 @@ public:
 	bool CollisionTest(shared_ptr<GameObject> o);
 	void OnCollision(const GameObjectList &objects);
 
+	shared_ptr<Shape> getBulletShape() {
+		return mBulletShape;
+	}
+
 private:
 	float mThrust;
 

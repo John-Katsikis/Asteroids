@@ -152,6 +152,10 @@ void Spaceship::Shoot(void)
 {
 	// Check the world exists
 	if (!mWorld) return;
+
+	shared_ptr<Shape> bullet_shape = make_shared<Shape>("bullet.shape");
+	SetBulletShape(bullet_shape);
+
 	// Construct a unit length vector in the direction the spaceship is headed
 	GLVector3f spaceship_heading(cos(DEG2RAD*mAngle), sin(DEG2RAD*mAngle), 0);
 	spaceship_heading.normalize();
@@ -176,6 +180,9 @@ void Spaceship::FastShoot(void)
 {
 	// Check the world exists
 	if (!mWorld) return;
+
+	shared_ptr<Shape> bullet_shape = make_shared<Shape>("fastBullet.shape");
+	SetBulletShape(bullet_shape);
 	// Construct a unit length vector in the direction the spaceship is headed
 	GLVector3f spaceship_heading(cos(DEG2RAD * mAngle), sin(DEG2RAD * mAngle), 0);
 	spaceship_heading.normalize();

@@ -268,8 +268,8 @@ void Asteroids::SpawnPowerup() {
 	int chance = rand() % 4;
 	int chanced = 3;//faster testing purposes
 
-	if (chance == 3) {
-		int rollForPowerup = rand() % 100;
+	if (chanced == 3) {
+		int rollForPowerup = 90;//rand() % 100;
 
 		if (rollForPowerup <= 40) {
 			CreateExtraLife();
@@ -277,7 +277,7 @@ void Asteroids::SpawnPowerup() {
 		else if (rollForPowerup > 40 && rollForPowerup <= 80) {
 			CreateShield();
 		}
-		else if (rollForPowerup > 80 && rollForPowerup < 100) {
+		else if (rollForPowerup > 80 && rollForPowerup <= 100) {
 			CreateUpgrade();
 		}
 
@@ -340,8 +340,8 @@ shared_ptr<GameObject> Asteroids::CreateSpaceship()
 	mSpaceship = make_shared<Spaceship>();
 	mSpaceship->SetBoundingShape(make_shared<BoundingSphere>(mSpaceship->GetThisPtr(), 4.0f));
 
-	shared_ptr<Shape> bullet_shape = make_shared<Shape>("fastBullet.shape");
-	mSpaceship->SetBulletShape(bullet_shape);
+	//shared_ptr<Shape> bullet_shape = make_shared<Shape>("fastBullet.shape");
+	//mSpaceship->SetBulletShape(bullet_shape);
 	Animation *anim_ptr = AnimationManager::GetInstance().GetAnimationByName("spaceship");
 
 	shared_ptr<Sprite> spaceship_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
@@ -388,6 +388,7 @@ void Asteroids::CreateSmallAst(shared_ptr<GameObject> parent, const uint num) {
 		asteroid_sprite->SetLoopAnimation(true);
 		int angle = rand() % 360;
 		shared_ptr<GameObject> asteroid = make_shared<SmallAst>(15*cos(DEG2RAD*angle)+parent->mPosition.x, 15*cos(DEG2RAD*angle)+parent->mPosition.y); //calculates offset distance from parent and spawns smaller asteroids
+
 		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 5.0f));
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
