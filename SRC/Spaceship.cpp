@@ -89,6 +89,52 @@ void Spaceship::Thrust(float t)
 	}
 }
 
+void Spaceship::RightThrust(float t) {
+	if (!isUpgraded) {
+		mThrust = t;
+		// Increase acceleration in the right direction of ship
+		mAcceleration.x = mThrust * cos(DEG2RAD * (mAngle - 90));
+		mAcceleration.y = mThrust * sin(DEG2RAD * (mAngle - 90));
+	}
+	else {
+		mThrust = t*20;
+		// Increase acceleration in the right direction of ship
+		mAcceleration.x = mThrust * cos(DEG2RAD * (mAngle - 90));
+		mAcceleration.y = mThrust * sin(DEG2RAD * (mAngle - 90));
+	}
+}
+
+
+void Spaceship::LeftThrust(float t) {
+	if (!isUpgraded) {
+		mThrust = t;
+		// Increase acceleration in the left direction of ship
+		mAcceleration.x = mThrust * cos(DEG2RAD * (mAngle + 90));
+		mAcceleration.y = mThrust * sin(DEG2RAD * (mAngle + 90));
+	}
+	else {
+		mThrust = t * 20;
+		// Increase acceleration in the right direction of ship
+		mAcceleration.x = mThrust * cos(DEG2RAD * (mAngle + 90));
+		mAcceleration.y = mThrust * sin(DEG2RAD * (mAngle + 90));
+	}
+}
+
+void Spaceship::Reverse(float t) {
+	if (!isUpgraded) {
+		mThrust = t;
+		// Increase acceleration in the opposite direction of ship
+		mAcceleration.x = -(mThrust * cos(DEG2RAD * mAngle));
+		mAcceleration.y = -(mThrust * sin(DEG2RAD * mAngle));
+	}
+	else {
+		mThrust = t*20;
+		// Increase acceleration in the opposite direction of ship
+		mAcceleration.x = -(mThrust * cos(DEG2RAD * mAngle));
+		mAcceleration.y = -(mThrust * sin(DEG2RAD * mAngle));
+	}
+}
+
 /** Set the rotation. */
 void Spaceship::Rotate(float r)
 {

@@ -6,7 +6,7 @@
 class SmallAst : public GameObject
 {
 public:
-	SmallAst(void);
+	SmallAst(int xPos, int yPos);
 	~SmallAst(void);
 
 	void OrderDestruction() override;

@@ -17,6 +17,10 @@ public:
 	virtual void Render(void);
 
 	virtual void Thrust(float t);
+	virtual void RightThrust(float t);
+	virtual void LeftThrust(float t);
+	virtual void Reverse(float t);
+
 	virtual void Rotate(float r);
 	virtual void Shoot(void);
 	virtual void FastShoot(void);   

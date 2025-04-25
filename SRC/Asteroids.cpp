@@ -73,13 +73,15 @@ void Asteroids::Start()
 	CreateGUI();
 	
 	// Create some asteroids and add them to the world
-	CreateAsteroids(10);
+	CreateAsteroids(1);
 	
-	CreateExtraLife();
+	SpawnPowerup();
+
+	//CreateExtraLife();
 
 	//CreateShield();
 
-	CreateUpgrade();
+	//CreateUpgrade();
 
 	// Add a player (watcher) to the game world
 	mGameWorld->AddListener(&mPlayer);
@@ -112,13 +114,37 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 			mSpaceship->Shoot();
 		}
 		break;
+
+	//case 'A': mSpaceship->LeftThrust(10); break;
+	//case 'a': mSpaceship->LeftThrust(10); break;
+
+	//case 'D': mSpaceship->RightThrust(10); break;
+	//case 'd': mSpaceship->RightThrust(10); break;
+
+	
 	default:
 		break;
 	}
 }
 
-void Asteroids::OnKeyReleased(uchar key, int x, int y) {}
+void Asteroids::OnKeyReleased(uchar key, int x, int y) {
+	/**
+		switch (key)
+		{
+		case 'A': mSpaceship->LeftThrust(0); break;
+		case 'a': mSpaceship->LeftThrust(0); break;
 
+		case 'D': mSpaceship->RightThrust(0); break;
+		case 'd': mSpaceship->RightThrust(0); break;
+
+
+		default:
+			break;
+		}
+
+
+	*/
+}
 void Asteroids::OnSpecialKeyPressed(int key, int x, int y)
 {
 	switch (key)
@@ -129,6 +155,9 @@ void Asteroids::OnSpecialKeyPressed(int key, int x, int y)
 	case GLUT_KEY_LEFT: mSpaceship->Rotate(90); break;
 	// If right arrow key is pressed start rotating clockwise
 	case GLUT_KEY_RIGHT: mSpaceship->Rotate(-90); break;
+	// If down arrow key is pressed start reversing
+	case GLUT_KEY_DOWN: mSpaceship->Reverse(10); break;
+
 	// Default case - do nothing
 	default: break;
 	}
@@ -144,6 +173,9 @@ void Asteroids::OnSpecialKeyReleased(int key, int x, int y)
 	case GLUT_KEY_LEFT: mSpaceship->Rotate(0); break;
 	// If right arrow key is released stop rotating
 	case GLUT_KEY_RIGHT: mSpaceship->Rotate(0); break;
+	// If down arrow key is released stop reversing
+	case GLUT_KEY_DOWN: mSpaceship->Reverse(0); break;
+
 	// Default case - do nothing
 	default: break;
 	} 
@@ -214,6 +246,7 @@ void Asteroids::OnTimer(int value)
 		mLevel++;
 		int num_asteroids = 10 + 2 * mLevel;
 		  CreateAsteroids(num_asteroids);
+		  SpawnPowerup();
 	}
 
 	if (value == SHOW_GAME_OVER)
@@ -230,6 +263,26 @@ void Asteroids::OnTimer(int value)
 
 
 // PROTECTED INSTANCE METHODS /////////////////////////////////////////////////
+
+void Asteroids::SpawnPowerup() {
+	int chance = rand() % 4;
+	int chanced = 3;//faster testing purposes
+
+	if (chance == 3) {
+		int rollForPowerup = rand() % 100;
+
+		if (rollForPowerup <= 40) {
+			CreateExtraLife();
+		}
+		else if (rollForPowerup > 40 && rollForPowerup <= 80) {
+			CreateShield();
+		}
+		else if (rollForPowerup > 80 && rollForPowerup < 100) {
+			CreateUpgrade();
+		}
+
+	}
+}
 
 void Asteroids::CreateUpgrade() {
 

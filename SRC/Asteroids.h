@@ -73,6 +73,8 @@ private:
 	void CreateAsteroids(const uint num_asteroids);
 	void CreateSmallAst(shared_ptr<GameObject> parent, const uint num);
 
+	void SpawnPowerup();
+
 	void CreateUpgrade();
 
 	void CreateExtraLife();

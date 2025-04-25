@@ -3,15 +3,15 @@
 #include "SmallAst.h"
 #include "BoundingShape.h"
 
-SmallAst::SmallAst(void) : GameObject("Small Asteroid")
+SmallAst::SmallAst(int xPos, int yPos) : GameObject("Small Asteroid")
 {
 	mAngle = rand() % 360;
 	mRotation = 0; // rand() % 90;
 	mPosition.x = rand() / 2;
 	mPosition.y = rand() / 2;
 	mPosition.z = 0.0;
-	mVelocity.x = 10.0 * cos(DEG2RAD * mAngle);
-	mVelocity.y = 10.0 * sin(DEG2RAD * mAngle);
+	mVelocity.x = rand() % 20 * cos(DEG2RAD * mAngle);
+	mVelocity.y = rand() % 20 * sin(DEG2RAD * mAngle);
 	mVelocity.z = 0.0;
 }
 
