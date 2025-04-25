@@ -14,6 +14,7 @@
 #include "SmallAst.h"
 #include "ExtraLife.h"
 #include "Shield.h"
+#include "Upgrade.h"
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -58,6 +59,7 @@ void Asteroids::Start()
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
 	glEnable(GL_LIGHT0);
 
+	Animation* upgrade_anim = AnimationManager::GetInstance().CreateAnimationFromFile("upgrade", 256, 256, 256, 256, "265shield.png");
 	Animation *shield_anim = AnimationManager::GetInstance().CreateAnimationFromFile("shield", 256, 256, 256, 256, "265shield.png"); //https://bitti-lab.itch.io/bitti-free-shield-16-images
 	Animation *extralife_anim = AnimationManager::GetInstance().CreateAnimationFromFile("extralife", 99, 116, 99, 116, "wrench.png"); //https://ilkaytobello.itch.io/inventory-items
 	Animation *explosion_anim = AnimationManager::GetInstance().CreateAnimationFromFile("explosion", 64, 1024, 64, 64, "explosion_fs.png");
@@ -75,7 +77,9 @@ void Asteroids::Start()
 	
 	CreateExtraLife();
 
-	CreateShield();
+	//CreateShield();
+
+	CreateUpgrade();
 
 	// Add a player (watcher) to the game world
 	mGameWorld->AddListener(&mPlayer);
@@ -101,7 +105,12 @@ void Asteroids::OnKeyPressed(uchar key, int x, int y)
 	switch (key)
 	{
 	case ' ':
-		mSpaceship->Shoot();
+		if (mSpaceship->isUpgraded) {
+			mSpaceship->FastShoot();
+		}
+		else {
+			mSpaceship->Shoot();
+		}
 		break;
 	default:
 		break;
@@ -181,6 +190,11 @@ void Asteroids::OnObjectRemoved(GameWorld* world, shared_ptr<GameObject> object)
 		SetTimer(20000, INVINCIBLE_TIMER);
 	}
 
+	if (object->GetType() == GameObjectType("Upgrade")) {
+		mSpaceship->applyUpgrades();
+	}
+
+
 	OnAsteroidDestroyed(mAsteroidCount);
 
 }
@@ -217,6 +231,22 @@ void Asteroids::OnTimer(int value)
 
 // PROTECTED INSTANCE METHODS /////////////////////////////////////////////////
 
+void Asteroids::CreateUpgrade() {
+
+	Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("upgrade");
+
+	shared_ptr<Sprite> upgrade_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
+
+	upgrade_sprite->SetLoopAnimation(true);
+	shared_ptr<GameObject> upgrade = make_shared<Upgrade>();
+	upgrade->SetBoundingShape(make_shared<BoundingSphere>(upgrade->GetThisPtr(), 10.0f));
+	upgrade->SetSprite(upgrade_sprite);
+	upgrade->SetScale(0.2f);
+
+	mGameWorld->AddObject(upgrade);
+}
+
+
 void Asteroids::CreateExtraLife() {
 
 	Animation* anim_ptr = AnimationManager::GetInstance().GetAnimationByName("extralife");
@@ -228,8 +258,6 @@ void Asteroids::CreateExtraLife() {
 	life->SetBoundingShape(make_shared<BoundingSphere>(life->GetThisPtr(), 10.0f));
 	life->SetSprite(life_sprite);
 	life->SetScale(0.2f);
-
-	life->id = 1;
 
 	mGameWorld->AddObject(life);
 }
@@ -351,6 +379,20 @@ void Asteroids::CreateGUI()
 	// Position it slightly to the right of the Score label
 	mGameDisplay->GetContainer()->AddComponent(asteroids_component, GLVector2f(0.3f, 1.0f));
 
+	// INVINCIBILITY SECONDS LEFT LABEL
+
+	// Create a new GUILabel and wrap it up in a shared_ptr
+	mTimeLeftLabel = make_shared<GUILabel>("Invincibility time left: 0");
+	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
+	mTimeLeftLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_RIGHT);
+	// Set the vertical alignment of the label to GUI_VALIGN_TOP
+	mTimeLeftLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_TOP);
+	// Add the GUILabel to the GUIComponent
+	shared_ptr<GUIComponent> invincibility_component = static_pointer_cast<GUIComponent>(mTimeLeftLabel);
+	// Position it slightly to the right of the Score label
+	mGameDisplay->GetContainer()->AddComponent(invincibility_component, GLVector2f(0.3f, 1.0f));
+
+
 	// GAME OVER LABEL
 
 	// Create a new GUILabel and wrap it up in a shared_ptr
@@ -403,6 +445,10 @@ void Asteroids::OnLifeChanged(int i)
 
 void Asteroids::OnPlayerKilled(int lives_left)
 {
+	if (mSpaceship->isUpgraded) {
+		mSpaceship->stripUpgrades();
+	}
+
 	shared_ptr<GameObject> explosion = CreateExplosion();
 	explosion->SetPosition(mSpaceship->GetPosition());
 	explosion->SetRotation(mSpaceship->GetRotation());

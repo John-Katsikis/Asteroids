@@ -19,8 +19,13 @@ public:
 	virtual void Thrust(float t);
 	virtual void Rotate(float r);
 	virtual void Shoot(void);
+	virtual void FastShoot(void);   
 
 	bool isInvincible;
+	bool isUpgraded;
+
+	void applyUpgrades();
+	void stripUpgrades();
 
 	void makeInvincible();
 	void makeNOT();
@@ -34,6 +39,7 @@ public:
 
 private:
 	float mThrust;
+
 
 	shared_ptr<Shape> mSpaceshipShape;
 	shared_ptr<Shape> mThrusterShape;

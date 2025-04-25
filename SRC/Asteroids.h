@@ -61,15 +61,19 @@ private:
 	shared_ptr<GUILabel> mGameOverLabel;
 	shared_ptr<GUILabel> mAsteroidsLabel;
 	shared_ptr<GUILabel> mVelocityLabel;
+	shared_ptr<GUILabel> mTimeLeftLabel;
 	
 	uint mLevel;
 	uint mAsteroidCount;
 
 	void ResetSpaceship();
 	shared_ptr<GameObject> CreateSpaceship();
+
 	void CreateGUI();
 	void CreateAsteroids(const uint num_asteroids);
 	void CreateSmallAst(shared_ptr<GameObject> parent, const uint num);
+
+	void CreateUpgrade();
 
 	void CreateExtraLife();
 
