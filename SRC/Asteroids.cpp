@@ -73,7 +73,7 @@ void Asteroids::Start()
 	CreateGUI();
 	
 	// Create some asteroids and add them to the world
-	CreateAsteroids(1);
+	CreateAsteroids(10);
 	
 	SpawnPowerup();
 
@@ -386,7 +386,8 @@ void Asteroids::CreateSmallAst(shared_ptr<GameObject> parent, const uint num) {
 			= make_shared<Sprite>(anim_ptr->GetWidth()/2, anim_ptr->GetHeight()/2, anim_ptr);
 
 		asteroid_sprite->SetLoopAnimation(true);
-		shared_ptr<GameObject> asteroid = make_shared<SmallAst>();
+		int angle = rand() % 360;
+		shared_ptr<GameObject> asteroid = make_shared<SmallAst>(15*cos(DEG2RAD*angle)+parent->mPosition.x, 15*cos(DEG2RAD*angle)+parent->mPosition.y); //calculates offset distance from parent and spawns smaller asteroids
 		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 5.0f));
 		asteroid->SetSprite(asteroid_sprite);
 		asteroid->SetScale(0.2f);
@@ -431,19 +432,6 @@ void Asteroids::CreateGUI()
 	shared_ptr<GUIComponent> asteroids_component = static_pointer_cast<GUIComponent>(mAsteroidsLabel);
 	// Position it slightly to the right of the Score label
 	mGameDisplay->GetContainer()->AddComponent(asteroids_component, GLVector2f(0.3f, 1.0f));
-
-	// INVINCIBILITY SECONDS LEFT LABEL
-
-	// Create a new GUILabel and wrap it up in a shared_ptr
-	mTimeLeftLabel = make_shared<GUILabel>("Invincibility time left: 0");
-	// Set the horizontal alignment of the label to GUI_HALIGN_CENTER
-	mTimeLeftLabel->SetHorizontalAlignment(GUIComponent::GUI_HALIGN_RIGHT);
-	// Set the vertical alignment of the label to GUI_VALIGN_TOP
-	mTimeLeftLabel->SetVerticalAlignment(GUIComponent::GUI_VALIGN_TOP);
-	// Add the GUILabel to the GUIComponent
-	shared_ptr<GUIComponent> invincibility_component = static_pointer_cast<GUIComponent>(mTimeLeftLabel);
-	// Position it slightly to the right of the Score label
-	mGameDisplay->GetContainer()->AddComponent(invincibility_component, GLVector2f(0.3f, 1.0f));
 
 
 	// GAME OVER LABEL
@@ -535,7 +523,3 @@ shared_ptr<GameObject> Asteroids::CreateExplosion()
 	explosion->Reset();
 	return explosion;
 }
-
-
-
-

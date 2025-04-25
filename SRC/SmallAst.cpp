@@ -7,11 +7,11 @@ SmallAst::SmallAst(int xPos, int yPos) : GameObject("Small Asteroid")
 {
 	mAngle = rand() % 360;
 	mRotation = 0; // rand() % 90;
-	mPosition.x = rand() / 2;
-	mPosition.y = rand() / 2;
+	mPosition.x = xPos;
+	mPosition.y = yPos;
 	mPosition.z = 0.0;
-	mVelocity.x = rand() % 20 * cos(DEG2RAD * mAngle);
-	mVelocity.y = rand() % 20 * sin(DEG2RAD * mAngle);
+	mVelocity.x = (rand() % 15) * cos(DEG2RAD * mAngle);
+	mVelocity.y = (rand() % 15) * sin(DEG2RAD * mAngle);
 	mVelocity.z = 0.0;
 }
 
