@@ -1,13 +1,13 @@
-#ifndef __SHIELD_H__
-#define __SHIELD_H__
+#ifndef __UPGRADE_H__
+#define __UPGRADE_H__
 
 #include "GameObject.h"
 
-class Shield : public GameObject
+class Upgrade : public GameObject
 {
 public:
-	Shield(void);
-	~Shield(void);
+	Upgrade(void);
+	~Upgrade(void);
 
 	bool CollisionTest(shared_ptr<GameObject> o);
 	void OnCollision(const GameObjectList& objects);
