@@ -15,6 +15,8 @@
 #include "ExtraLife.h"
 #include "Shield.h"
 #include "Upgrade.h"
+#include <random>
+#include <functional>
 
 // PUBLIC INSTANCE CONSTRUCTORS ///////////////////////////////////////////////
 
@@ -59,7 +61,7 @@ void Asteroids::Start()
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
 	glEnable(GL_LIGHT0);
 
-	Animation* upgrade_anim = AnimationManager::GetInstance().CreateAnimationFromFile("upgrade", 256, 256, 256, 256, "265shield.png");
+	Animation* upgrade_anim = AnimationManager::GetInstance().CreateAnimationFromFile("upgrade", 140, 59, 140, 59, "smg.png"); //https://timirytochca93.itch.io/military-gun-pack 
 	Animation *shield_anim = AnimationManager::GetInstance().CreateAnimationFromFile("shield", 256, 256, 256, 256, "265shield.png"); //https://bitti-lab.itch.io/bitti-free-shield-16-images
 	Animation *extralife_anim = AnimationManager::GetInstance().CreateAnimationFromFile("extralife", 99, 116, 99, 116, "wrench.png"); //https://ilkaytobello.itch.io/inventory-items
 	Animation *explosion_anim = AnimationManager::GetInstance().CreateAnimationFromFile("explosion", 64, 1024, 64, 64, "explosion_fs.png");
@@ -264,20 +266,30 @@ void Asteroids::OnTimer(int value)
 
 // PROTECTED INSTANCE METHODS /////////////////////////////////////////////////
 
+//random number generator to remove bias over long term gameplay, found in https://en.cppreference.com/w/cpp/numeric/random/random_device - https://en.cppreference.com/w/cpp/numeric/random/mersenne_twister_engine - https://en.cppreference.com/w/cpp/numeric/random/uniform_int_distribution
+std::random_device seed;
+std::mt19937 gen(seed());
+
+std::uniform_int_distribution<> randchance(0, 99);
+
 void Asteroids::SpawnPowerup() {
-	int chance = rand() % 4;
-	int chanced = 3;//faster testing purposes
 
-	if (chanced == 3) {
-		int rollForPowerup = 90;//rand() % 100;
+	int rollthreshold = 40;
+	
+	int randnum = 35;//randchance(gen);
 
-		if (rollForPowerup <= 40) {
+	int chancethresholdd = 3;//faster testing purposes
+
+	if (randnum <= rollthreshold) {
+		
+
+		if (randnum <= 15) {
 			CreateExtraLife();
 		}
-		else if (rollForPowerup > 40 && rollForPowerup <= 80) {
+		else if (randnum <= 30) {
 			CreateShield();
 		}
-		else if (rollForPowerup > 80 && rollForPowerup <= 100) {
+		else {
 			CreateUpgrade();
 		}
 
@@ -346,7 +358,13 @@ shared_ptr<GameObject> Asteroids::CreateSpaceship()
 
 	shared_ptr<Sprite> spaceship_sprite = make_shared<Sprite>(anim_ptr->GetWidth(), anim_ptr->GetHeight(), anim_ptr);
 	
+	
+
+	
 	mSpaceship->SetSprite(spaceship_sprite);
+	
+	mSpaceship->NormalThruster();
+
 	mSpaceship->SetScale(0.1f);
 	// Reset spaceship back to centre of the world
 	mSpaceship->Reset();

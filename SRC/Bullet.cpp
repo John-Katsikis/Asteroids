@@ -57,7 +57,7 @@ bool Bullet::CollisionTest(shared_ptr<GameObject> o)
 
 void Bullet::OnCollision(const GameObjectList& objects){
 	
-	if (objects.front()->GetType() == GameObjectType("Asteroid") || objects.front()->GetType() == GameObjectType("Small Asteroid")) {
+	if (objects.front()->GetType() == GameObjectType("Asteroid") || objects.front()->GetType() == GameObjectType("Small Asteroid") || objects.front()->GetType() == GameObjectType("ExtraLife") || objects.front()->GetType() == GameObjectType("Shield") || objects.front()->GetType() == GameObjectType("Upgrade")) {
 		objects.front()->OrderDestruction();
 	}
 	

@@ -7,7 +7,7 @@ using namespace std;
 
 Upgrade::Upgrade(void) : GameObject("Upgrade")
 {
-	mAngle = rand() % 360;
+	mAngle = 180; //rand() % 360;
 	mRotation = 0; // rand() % 90;
 	mPosition.x = rand() / 2;
 	mPosition.y = rand() / 2;
@@ -24,7 +24,7 @@ Upgrade::~Upgrade(void)
 bool Upgrade::CollisionTest(shared_ptr<GameObject> o)
 {
 	//if (GetType() == o->GetType()) return false;
-	if (o->GetType() == GameObjectType("Bullet"))
+	if (o->GetType() == GameObjectType("Bullet")) return false;
 		if (mBoundingShape.get() == NULL) return false;
 	if (o->GetBoundingShape().get() == NULL) return false;
 	return mBoundingShape->CollisionTest(o->GetBoundingShape());
@@ -46,12 +46,24 @@ void Upgrade::OnCollision(const GameObjectList& objects)
 	else if (objects.front()->GetType() == GameObjectType("Small Asteroid")) {
 		swap(mVelocity.x, objects.front()->mVelocity.x);
 		swap(mVelocity.y, objects.front()->mVelocity.y);
-		mVelocity.x /= 2;
-		mVelocity.y /= 2;
+		//mVelocity.x /= 2;
+		//mVelocity.y /= 2;
 	}
 	else if (objects.front()->GetType() == GameObjectType("Spaceship")) {
 		mWorld->FlagForRemoval(GetThisPtr());
 	}
+
+	else if (objects.front()->GetType() == GameObjectType("Shield")) {
+		swap(mVelocity.x, objects.front()->mVelocity.x);
+		swap(mVelocity.y, objects.front()->mVelocity.y);
+	}
+
+	else if (objects.front()->GetType() == GameObjectType("ExtraLife")) {
+		swap(mVelocity.x, objects.front()->mVelocity.x);
+		swap(mVelocity.y, objects.front()->mVelocity.y);
+	}
+
+	
 
 	else {
 		mWorld->FlagForRemoval(GetThisPtr());

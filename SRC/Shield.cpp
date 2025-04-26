@@ -38,11 +38,10 @@ void Shield::OnCollision(const GameObjectList& objects)
 	//else{
 
 	if (objects.front()->GetType() == GameObjectType("Asteroid")) {
-		if (this < objects.front().get()) {
 			swap(mVelocity.x, objects.front()->mVelocity.x);
 			swap(mVelocity.y, objects.front()->mVelocity.y);
-		}
 	}
+
 	else if (objects.front()->GetType() == GameObjectType("Small Asteroid")) {
 		swap(mVelocity.x, objects.front()->mVelocity.x);
 		swap(mVelocity.y, objects.front()->mVelocity.y);
@@ -52,6 +51,16 @@ void Shield::OnCollision(const GameObjectList& objects)
 	else if (objects.front()->GetType() == GameObjectType("Spaceship")) {
 		mWorld->FlagForRemoval(GetThisPtr());
 	}
+
+	else if (objects.front()->GetType() == GameObjectType("ExtraLife")) {
+		swap(mVelocity.x, objects.front()->mVelocity.x);
+		swap(mVelocity.y, objects.front()->mVelocity.y);
+	}
+
+	else if (objects.front()->GetType() == GameObjectType("Upgrade")) {
+		
+	}
+
 
 	else {
 		mWorld->FlagForRemoval(GetThisPtr());

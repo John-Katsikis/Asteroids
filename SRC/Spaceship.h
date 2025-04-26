@@ -28,15 +28,23 @@ public:
 	bool isInvincible;
 	bool isUpgraded;
 
+	void invinciblePupgraded();
+
+	const string& chooseBullet();
+
 	void applyUpgrades();
 	void stripUpgrades();
 
 	void makeInvincible();
 	void makeNOT();
 
+
 	void SetSpaceshipShape(shared_ptr<Shape> spaceship_shape) { mSpaceshipShape = spaceship_shape; }
 	void SetThrusterShape(shared_ptr<Shape> thruster_shape) { mThrusterShape = thruster_shape; }
 	void SetBulletShape(shared_ptr<Shape> bullet_shape) { mBulletShape = bullet_shape; }
+
+	void FastThruster();
+	void NormalThruster();
 
 	bool CollisionTest(shared_ptr<GameObject> o);
 	void OnCollision(const GameObjectList &objects);

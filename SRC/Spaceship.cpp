@@ -36,6 +36,33 @@ Spaceship::~Spaceship(void)
 // PUBLIC INSTANCE METHODS ////////////////////////////////////////////////////
 
 
+void Spaceship::invinciblePupgraded() {
+
+}
+
+
+string state;
+
+const string& Spaceship::chooseBullet() {
+	if (!isUpgraded && !isInvincible) {
+		
+		state = "bullet.shape";
+		return state;
+	}
+	else if(isUpgraded && !isInvincible) {
+		state = "fastBullet.shape";
+		return state;
+	}
+	else if (!isUpgraded && isInvincible) {
+		state = "invincibleBullet.shape";
+		return state;
+	}
+	else if (isUpgraded && isInvincible){
+		state = "invincibleBullet.shape";
+		return state;
+	}
+}
+
 void Spaceship::applyUpgrades() {
 	isUpgraded = true;
 }
@@ -70,6 +97,16 @@ void Spaceship::Render(void)
 	}
 
 	GameObject::Render();
+}
+
+void Spaceship::FastThruster() {
+	shared_ptr<Shape> thruster_shape = make_shared<Shape>("fastthruster.shape");
+	SetThrusterShape(thruster_shape);
+}
+
+void Spaceship::NormalThruster() {
+	shared_ptr<Shape> thruster_shape = make_shared<Shape>("thruster.shape");
+	SetThrusterShape(thruster_shape);
 }
 
 /** Fire the rockets. */
@@ -153,7 +190,7 @@ void Spaceship::Shoot(void)
 	// Check the world exists
 	if (!mWorld) return;
 
-	shared_ptr<Shape> bullet_shape = make_shared<Shape>("bullet.shape");
+	shared_ptr<Shape> bullet_shape = make_shared<Shape>(chooseBullet());
 	SetBulletShape(bullet_shape);
 
 	// Construct a unit length vector in the direction the spaceship is headed
@@ -181,7 +218,7 @@ void Spaceship::FastShoot(void)
 	// Check the world exists
 	if (!mWorld) return;
 
-	shared_ptr<Shape> bullet_shape = make_shared<Shape>("fastBullet.shape");
+	shared_ptr<Shape> bullet_shape = make_shared<Shape>(chooseBullet());
 	SetBulletShape(bullet_shape);
 	// Construct a unit length vector in the direction the spaceship is headed
 	GLVector3f spaceship_heading(cos(DEG2RAD * mAngle), sin(DEG2RAD * mAngle), 0);

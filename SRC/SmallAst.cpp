@@ -35,9 +35,8 @@ bool SmallAst::CollisionTest(shared_ptr<GameObject> o)
 void SmallAst::OnCollision(const GameObjectList& objects)
 {
 	if (objects.front()->GetType() == GameObjectType("Small Asteroid")) {
-
 			if (id < objects.front()->id) {
-			//	mWorld->FlagForRemoval(GetThisPtr());
+			
 				swap(mVelocity.x, objects.front()->mVelocity.x);
 				swap(mVelocity.y, objects.front()->mVelocity.y);
 				
@@ -52,8 +51,9 @@ void SmallAst::OnCollision(const GameObjectList& objects)
 			//	mVelocity.x *= 2;
 				//mVelocity.y *= 2;
 	}
-	//	else {   
-	//		mWorld->FlagForRemoval(GetThisPtr());
-	//	}
+
+		else if(objects.front()->GetType() == GameObjectType("Upgrade") || objects.front()->GetType() == GameObjectType("ExtraLife") || objects.front()->GetType() == GameObjectType("Shield")){
+
+		}
 	
 	}
