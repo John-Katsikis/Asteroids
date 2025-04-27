@@ -21,10 +21,14 @@ Upgrade::~Upgrade(void)
 {
 }
 
+void Upgrade::OrderDestruction() {
+	mWorld->FlagForRemoval(GetThisPtr());
+}
+
 bool Upgrade::CollisionTest(shared_ptr<GameObject> o)
 {
 	//if (GetType() == o->GetType()) return false;
-	if (o->GetType() == GameObjectType("Bullet")) return false;
+	//if (o->GetType() == GameObjectType("Bullet")) return false;
 		if (mBoundingShape.get() == NULL) return false;
 	if (o->GetBoundingShape().get() == NULL) return false;
 	return mBoundingShape->CollisionTest(o->GetBoundingShape());
@@ -63,7 +67,9 @@ void Upgrade::OnCollision(const GameObjectList& objects)
 		swap(mVelocity.y, objects.front()->mVelocity.y);
 	}
 
-	
+	else if (objects.front()->GetType() == GameObjectType("Bullet")) {
+
+	}
 
 	else {
 		mWorld->FlagForRemoval(GetThisPtr());

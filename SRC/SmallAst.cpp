@@ -36,10 +36,8 @@ void SmallAst::OnCollision(const GameObjectList& objects)
 {
 	if (objects.front()->GetType() == GameObjectType("Small Asteroid")) {
 			if (id < objects.front()->id) {
-			
 				swap(mVelocity.x, objects.front()->mVelocity.x);
 				swap(mVelocity.y, objects.front()->mVelocity.y);
-				
 			}
 		}
 		else if (objects.front()->GetType() == GameObjectType("Spaceship")) {
@@ -48,11 +46,11 @@ void SmallAst::OnCollision(const GameObjectList& objects)
 		else if (objects.front()->GetType() == GameObjectType("Asteroid")) {
 			swap(mVelocity.x, objects.front()->mVelocity.x);
 			swap(mVelocity.y, objects.front()->mVelocity.y);
-			//	mVelocity.x *= 2;
-				//mVelocity.y *= 2;
 	}
 
-		else if(objects.front()->GetType() == GameObjectType("Upgrade") || objects.front()->GetType() == GameObjectType("ExtraLife") || objects.front()->GetType() == GameObjectType("Shield")){
+		else if(objects.front()->GetType() == GameObjectType("Upgrade") 
+			|| objects.front()->GetType() == GameObjectType("ExtraLife") 
+			|| objects.front()->GetType() == GameObjectType("Shield")){
 
 		}
 	

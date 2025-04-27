@@ -9,6 +9,7 @@ public:
 	Shield(void);
 	~Shield(void);
 
+	void OrderDestruction();
 	bool CollisionTest(shared_ptr<GameObject> o);
 	void OnCollision(const GameObjectList& objects);
 

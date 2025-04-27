@@ -21,10 +21,14 @@ ExtraLife::~ExtraLife(void)
 {
 }
 
+void ExtraLife::OrderDestruction() {
+	mWorld->FlagForRemoval(GetThisPtr());
+}
+
 bool ExtraLife::CollisionTest(shared_ptr<GameObject> o)
 {
 	//if (GetType() == o->GetType()) return false;
-	if (o->GetType() == GameObjectType("Bullet"))
+	//if (o->GetType() == GameObjectType("Bullet")) return false;
 	if (mBoundingShape.get() == NULL) return false;
 	if (o->GetBoundingShape().get() == NULL) return false;
 	return mBoundingShape->CollisionTest(o->GetBoundingShape());
@@ -38,10 +42,8 @@ void ExtraLife::OnCollision(const GameObjectList& objects)
 	//else{
 	
 	if (objects.front()->GetType() == GameObjectType("Asteroid")){
-
 			swap(mVelocity.x, objects.front()->mVelocity.x);
 			swap(mVelocity.y, objects.front()->mVelocity.y);
-		
 	}
 	else if (objects.front()->GetType() == GameObjectType("Small Asteroid")){
 		swap(mVelocity.x, objects.front()->mVelocity.x);
@@ -58,6 +60,10 @@ void ExtraLife::OnCollision(const GameObjectList& objects)
 	}
 
 	else if (objects.front()->GetType() == GameObjectType("Upgrade")) {
+
+	}
+
+	else if (objects.front()->GetType() == GameObjectType("Bullet")) {
 
 	}
 

@@ -21,10 +21,14 @@ Shield::~Shield(void)
 {
 }
 
+void Shield::OrderDestruction() {
+	mWorld->FlagForRemoval(GetThisPtr());
+}
+
 bool Shield::CollisionTest(shared_ptr<GameObject> o)
 {
 	//if (GetType() == o->GetType()) return false;
-	if (o->GetType() == GameObjectType("Bullet"))
+	//if (o->GetType() == GameObjectType("Bullet"))
 		if (mBoundingShape.get() == NULL) return false;
 	if (o->GetBoundingShape().get() == NULL) return false;
 	return mBoundingShape->CollisionTest(o->GetBoundingShape());
@@ -61,6 +65,9 @@ void Shield::OnCollision(const GameObjectList& objects)
 		
 	}
 
+	else if (objects.front()->GetType() == GameObjectType("Bullet")) {
+
+	}
 
 	else {
 		mWorld->FlagForRemoval(GetThisPtr());

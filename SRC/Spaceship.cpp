@@ -35,12 +35,6 @@ Spaceship::~Spaceship(void)
 
 // PUBLIC INSTANCE METHODS ////////////////////////////////////////////////////
 
-
-void Spaceship::invinciblePupgraded() {
-
-}
-
-
 string state;
 
 const string& Spaceship::chooseBullet() {
@@ -271,6 +265,15 @@ void Spaceship::OnCollision(const GameObjectList &objects)
 	else if (objects.front()->GetType() == GameObjectType("ExtraLife")) {
 
 	}
+	
+	else if (objects.front()->GetType() == GameObjectType("Upgrade")) {
+
+	}
+	
+	else if (objects.front()->GetType() == GameObjectType("Shield")) {
+
+	}
+
 	else {
 		mWorld->FlagForRemoval(GetThisPtr());
 	}

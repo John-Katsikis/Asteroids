@@ -152,13 +152,13 @@ void Asteroids::OnSpecialKeyPressed(int key, int x, int y)
 	switch (key)
 	{
 	// If up arrow key is pressed start applying forward thrust
-	case GLUT_KEY_UP: mSpaceship->Thrust(10); break;
+	case GLUT_KEY_UP: mSpaceship->Thrust(20); break;
 	// If left arrow key is pressed start rotating anti-clockwise
 	case GLUT_KEY_LEFT: mSpaceship->Rotate(90); break;
 	// If right arrow key is pressed start rotating clockwise
 	case GLUT_KEY_RIGHT: mSpaceship->Rotate(-90); break;
 	// If down arrow key is pressed start reversing
-	case GLUT_KEY_DOWN: mSpaceship->Reverse(10); break;
+	case GLUT_KEY_DOWN: mSpaceship->Reverse(20); break;
 
 	// Default case - do nothing
 	default: break;
@@ -276,13 +276,12 @@ void Asteroids::SpawnPowerup() {
 
 	int rollthreshold = 40;
 	
-	int randnum = 35;//randchance(gen);
+	int randnum = randchance(gen);
 
-	int chancethresholdd = 3;//faster testing purposes
+	int randnumb = 5; //for faster testing purposes
 
-	if (randnum <= rollthreshold) {
-		
-
+	if (randnumb <= rollthreshold) {
+	
 		if (randnum <= 15) {
 			CreateExtraLife();
 		}
@@ -389,7 +388,7 @@ void Asteroids::CreateAsteroids(const uint num_asteroids)
 		asteroid->SetScale(0.2f);
 
 		asteroid->id=i;
-	//	std::cout << asteroid->id <<std::endl;
+
 		mGameWorld->AddObject(asteroid);
 	}
 
@@ -405,7 +404,8 @@ void Asteroids::CreateSmallAst(shared_ptr<GameObject> parent, const uint num) {
 
 		asteroid_sprite->SetLoopAnimation(true);
 		int angle = rand() % 360;
-		shared_ptr<GameObject> asteroid = make_shared<SmallAst>(15*cos(DEG2RAD*angle)+parent->mPosition.x, 15*cos(DEG2RAD*angle)+parent->mPosition.y); //calculates offset distance from parent and spawns smaller asteroids
+		shared_ptr<GameObject> asteroid = make_shared<SmallAst>(13*cos(DEG2RAD*angle)+parent->mPosition.x, 
+			13*sin(DEG2RAD*angle)+parent->mPosition.y); //calculates offset distance from parent and spawns smaller asteroids
 
 		asteroid->SetBoundingShape(make_shared<BoundingSphere>(asteroid->GetThisPtr(), 5.0f));
 		asteroid->SetSprite(asteroid_sprite);
@@ -508,7 +508,6 @@ void Asteroids::OnPlayerKilled(int lives_left)
 	if (mSpaceship->isUpgraded) {
 		mSpaceship->stripUpgrades();
 	}
-
 	shared_ptr<GameObject> explosion = CreateExplosion();
 	explosion->SetPosition(mSpaceship->GetPosition());
 	explosion->SetRotation(mSpaceship->GetRotation());

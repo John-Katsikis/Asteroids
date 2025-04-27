@@ -37,11 +37,7 @@ bool Asteroid::CollisionTest(shared_ptr<GameObject> o)
 
 void Asteroid::OnCollision(const GameObjectList& objects)
 {
-	//if (objects.front()->GetType() == GameObjectType("Bullet")) {
-	//	mVelocity.y = 30;
-	//}
-	//else{
-	
+
 	if (objects.front()->GetType() == GameObjectType("Asteroid")){
 		if (this < objects.front().get()) {
 			swap(mVelocity.x, objects.front()->mVelocity.x);
@@ -52,7 +48,9 @@ void Asteroid::OnCollision(const GameObjectList& objects)
 		
 	}
 
-	else if (objects.front()->GetType() == GameObjectType("Upgrade") || objects.front()->GetType() == GameObjectType("ExtraLife") || objects.front()->GetType() == GameObjectType("Shield")) {
+	else if (objects.front()->GetType() == GameObjectType("Upgrade") 
+		|| objects.front()->GetType() == GameObjectType("ExtraLife") 
+		|| objects.front()->GetType() == GameObjectType("Shield")) {
 
 	}
 
