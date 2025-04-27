@@ -13,7 +13,6 @@ class Player : public IGameWorldListener
 public:
 	Player() {
 		mLives = 3;
-		isInvincible = false;
 	}
 
 	virtual ~Player() {}
@@ -24,7 +23,6 @@ public:
 
 	void increaseLives(int i) {
 		mLives = mLives + i;
-		cout << mLives << endl;
 	}
 
 	int getLives() {
@@ -58,7 +56,6 @@ public:
 
 private:
 	int mLives;
-	bool isInvincible;
 	typedef std::list< shared_ptr<IPlayerListener> > PlayerListenerList;
 
 	PlayerListenerList mListeners;

@@ -7,7 +7,7 @@ using namespace std;
 
 Upgrade::Upgrade(void) : GameObject("Upgrade")
 {
-	mAngle = 180; //rand() % 360;
+	mAngle = 90; //rand() % 360;
 	mRotation = 0; // rand() % 90;
 	mPosition.x = rand() / 2;
 	mPosition.y = rand() / 2;

@@ -120,7 +120,7 @@ void Spaceship::Thrust(float t)
 	}
 }
 
-void Spaceship::RightThrust(float t) {
+void Spaceship::RightThrust(float t) { //not used
 	if (!isUpgraded) {
 		mThrust = t;
 		// Increase acceleration in the right direction of ship
@@ -136,7 +136,7 @@ void Spaceship::RightThrust(float t) {
 }
 
 
-void Spaceship::LeftThrust(float t) {
+void Spaceship::LeftThrust(float t) { //not used
 	if (!isUpgraded) {
 		mThrust = t;
 		// Increase acceleration in the left direction of ship

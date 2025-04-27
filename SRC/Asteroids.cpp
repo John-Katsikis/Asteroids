@@ -61,7 +61,7 @@ void Asteroids::Start()
 	glLightfv(GL_LIGHT0, GL_DIFFUSE, diffuse_light);
 	glEnable(GL_LIGHT0);
 
-	Animation* upgrade_anim = AnimationManager::GetInstance().CreateAnimationFromFile("upgrade", 140, 59, 140, 59, "smg.png"); //https://timirytochca93.itch.io/military-gun-pack 
+	Animation* upgrade_anim = AnimationManager::GetInstance().CreateAnimationFromFile("upgrade", 59, 140, 59, 140, "smg.png"); //https://timirytochca93.itch.io/military-gun-pack 
 	Animation *shield_anim = AnimationManager::GetInstance().CreateAnimationFromFile("shield", 256, 256, 256, 256, "265shield.png"); //https://bitti-lab.itch.io/bitti-free-shield-16-images
 	Animation *extralife_anim = AnimationManager::GetInstance().CreateAnimationFromFile("extralife", 99, 116, 99, 116, "wrench.png"); //https://ilkaytobello.itch.io/inventory-items
 	Animation *explosion_anim = AnimationManager::GetInstance().CreateAnimationFromFile("explosion", 64, 1024, 64, 64, "explosion_fs.png");
@@ -77,11 +77,11 @@ void Asteroids::Start()
 	// Create some asteroids and add them to the world
 	CreateAsteroids(10);
 	
-	SpawnPowerup();
+	//SpawnPowerup();
 
 	//CreateExtraLife();
 
-	//CreateShield();
+	CreateShield();
 
 	//CreateUpgrade();
 
